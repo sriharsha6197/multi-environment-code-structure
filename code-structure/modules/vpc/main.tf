@@ -47,6 +47,7 @@ resource "aws_eip" "eip" {
   domain = "vpc"
 }
 resource "aws_nat_gateway" "nat-gateway" {
+  count = length(aws_eip.eip)
   allocation_id = aws_eip.eip[count.index].id
   subnet_id = aws_subnet.public_subnets[count.index].id
   tags = {
