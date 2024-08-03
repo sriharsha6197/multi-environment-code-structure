@@ -53,7 +53,7 @@ resource "aws_nat_gateway" "nat-gateway" {
   allocation_id = aws_eip.eip[count.index].id
   subnet_id = aws_subnet.public_subnets[count.index].id
   tags = {
-    Name = "nat-gateway-${count.index}"
+    Name = "${var.env}-nat-gateway-${count.index}"
   }
   depends_on = [ aws_internet_gateway.igw ]
 }
@@ -63,6 +63,9 @@ resource "aws_route_table" "private_route_table" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat-gateway[count.index].id
+  }
+  tags = {
+    Name = "${var.env}-private-route-table-${count.index}"
   }
 }
 resource "aws_route_table_association" "private_route_table_association" {
@@ -75,7 +78,7 @@ resource "aws_security_group" "allow-all-sg" {
   description = "Allow TLS inbound traffic and all outbound traffic"
   vpc_id = aws_vpc.vpc1.id
   tags = {
-    Name = "alllow-all-sg"
+    Name = "alllow-all-sg-${var.env}"
   }
 }
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
@@ -87,4 +90,15 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.allow-all-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
+}
+resource "aws_instance" "pr_instance" {
+  count = length(aws_subnet.private_subnets)
+  ami = data.aws_ami.ami.id
+  instance_type = "t3.micro"
+  subnet_id = aws_subnet.private_subnets[count.index].id
+  security_groups = [data.aws_security_group.id_sg.id]
+  associate_public_ip_address = false
+  tags = {
+    Name = "${var.env}-private-instance-${count.index}"
+  }
 }
