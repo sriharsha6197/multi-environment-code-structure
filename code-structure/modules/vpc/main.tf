@@ -8,6 +8,7 @@ resource "aws_subnet" "public_subnets" {
   vpc_id = aws_vpc.vpc1.id
   count = length(var.cidr_blocks)
   cidr_block = var.cidr_blocks[count.index]
+  availability_zone = var.azs[count.index]
   tags = {
     Name = "${var.env}-public-subnet-${count.index + 1}"
   }
@@ -16,6 +17,7 @@ resource "aws_subnet" "private_subnets" {
   vpc_id = aws_vpc.vpc1.id
   count = length(var.private_blocks)
   cidr_block = var.private_blocks[count.index]
+  availability_zone = var.azs[count.index]
   tags = {
     Name = "${var.env}-private-subnet-${count.index + 1}"
   }
