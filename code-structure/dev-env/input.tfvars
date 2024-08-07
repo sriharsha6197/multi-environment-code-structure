@@ -4,4 +4,4 @@ env = "dev"
 cidr_block = "10.0.0.0/16"
 azs = ["us-east-1d","us-east-1a"]
 peer_owner_id = 891377109045
-peer_vpc_id = "172.31.0.0/16"
+peer_vpc_id = "vpc-0683db6837f2e22a0"
