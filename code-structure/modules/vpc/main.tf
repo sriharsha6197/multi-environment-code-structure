@@ -105,11 +105,17 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 
 resource "aws_vpc_peering_connection" "foo" {
   peer_owner_id = var.peer_owner_id
-  peer_vpc_id   = var.peer_vpc_id
-  vpc_id        = var.cidr_block
+  peer_vpc_id   = var.peer_vpc_id.id
+  vpc_id = var.vpc_id.id
   auto_accept   = true
 
   tags = {
     Name = "${var.env}-peering connection between default vpc and vpc created through terraform"
   }
 }
+# resource "aws_vpc" "target_vpc" {
+#   cidr_block = "172.31.0.0./16"
+# }
+# resource "aws_vpc" "requester_vpc" {
+#   cidr_block = "10.0.0.0/16"
+# }
