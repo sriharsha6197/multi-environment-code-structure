@@ -91,14 +91,14 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
-resource "aws_instance" "pr_instance" {
-  count = length(aws_subnet.private_subnets)
-  ami = data.aws_ami.ami.id
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.private_subnets[count.index].id
-  security_groups = [data.aws_security_group.id_sg.id]
-  associate_public_ip_address = false
-  tags = {
-    Name = "${var.env}-private-instance-${count.index}"
-  }
-}
+# resource "aws_instance" "pr_instance" {
+#   count = length(aws_subnet.private_subnets)
+#   ami = data.aws_ami.ami.id
+#   instance_type = "t3.micro"
+#   subnet_id = aws_subnet.private_subnets[count.index].id
+#   security_groups = [data.aws_security_group.id_sg.id]
+#   associate_public_ip_address = false
+#   tags = {
+#     Name = "${var.env}-private-instance-${count.index}"
+#   }
+# }
