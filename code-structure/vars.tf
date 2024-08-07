@@ -16,9 +16,6 @@ variable "cidr_block" {
 variable "peer_owner_id" {
   
 }
-variable "vpc_id" {
-  
-}
 variable "peer_vpc_id" {
   
 }
