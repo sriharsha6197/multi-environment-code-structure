@@ -106,7 +106,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 resource "aws_vpc_peering_connection" "foo" {
   peer_owner_id = var.peer_owner_id
   peer_vpc_id   = var.peer_vpc_id.id
-  vpc_id = var.vpc_id.id
+  vpc_id = aws_vpc.vpc1.id
   auto_accept   = true
 
   tags = {
