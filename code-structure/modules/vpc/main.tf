@@ -113,9 +113,3 @@ resource "aws_vpc_peering_connection" "foo" {
     Name = "${var.env}-peering connection between default vpc and vpc created through terraform"
   }
 }
-resource "aws_vpc" "target_vpc" {
-  cidr_block = "172.31.0.0./16"
-}
-# resource "aws_vpc" "requester_vpc" {
-#   cidr_block = "10.0.0.0/16"
-# }
