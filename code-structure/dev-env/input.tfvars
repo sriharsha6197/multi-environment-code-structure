@@ -5,4 +5,3 @@ cidr_block = "10.0.0.0/16"
 azs = ["us-east-1d","us-east-1a"]
 peer_owner_id = 891377109045
 peer_vpc_id = "172.31.0.0/16"
-vpc_id = "10.0.0.0/16"
